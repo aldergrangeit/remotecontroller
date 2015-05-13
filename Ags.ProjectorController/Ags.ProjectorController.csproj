@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CasioController.cs" />
+    <Compile Include="ControllerDecorator.cs" />
     <Compile Include="IProjectorController.cs" />
     <Compile Include="PrometheonPrm35Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -30,11 +30,14 @@ namespace prm35serialcommands
             switch (controllerType)
             {
                 case "Promer":
-                    controller = new PrometheanPrm35Controller(port);
+                    controller = new ControllerDecorator(new PrometheanPrm35Controller(port));
                     break;
                 default:
                     throw new ApplicationException("NO CONTROLLER TYPE");
             }
+
+            // wire up the events to show in the console
+            controller.Message += (sender, s) => Console.WriteLine(s);
             
             try
             {
@@ -91,6 +94,7 @@ namespace prm35serialcommands
             }
             catch(NotImplementedException ex)
             {
+                Console.WriteLine("This projector does not support this operation");
                 Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
