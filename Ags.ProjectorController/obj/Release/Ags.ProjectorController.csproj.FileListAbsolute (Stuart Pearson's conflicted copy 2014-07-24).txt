@@ -1,0 +1,4 @@
+C:\Users\Stuart\ConsoleApplication2\Ags.ProjectorController\bin\Release\Ags.ProjectorController.dll
+C:\Users\Stuart\ConsoleApplication2\Ags.ProjectorController\bin\Release\Ags.ProjectorController.pdb
+C:\Users\Stuart\ConsoleApplication2\Ags.ProjectorController\obj\Release\Ags.ProjectorController.dll
+C:\Users\Stuart\ConsoleApplication2\Ags.ProjectorController\obj\Release\Ags.ProjectorController.pdb

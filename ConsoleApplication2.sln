@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ags.ProjectorController", "Ags.ProjectorController\Ags.ProjectorController.csproj", "{C21B033E-7B3A-4CCF-9676-38685D6EEFF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ags.RemoteControl", "Ags.RemoteControl\Ags.RemoteControl.csproj", "{21270BBB-65EF-4A1C-AC75-8B472846F257}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C21B033E-7B3A-4CCF-9676-38685D6EEFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21B033E-7B3A-4CCF-9676-38685D6EEFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21B033E-7B3A-4CCF-9676-38685D6EEFF1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21B033E-7B3A-4CCF-9676-38685D6EEFF1}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{21270BBB-65EF-4A1C-AC75-8B472846F257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21270BBB-65EF-4A1C-AC75-8B472846F257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21270BBB-65EF-4A1C-AC75-8B472846F257}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{21270BBB-65EF-4A1C-AC75-8B472846F257}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

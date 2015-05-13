@@ -1,0 +1,32 @@
+\\alder-nas\staff\spearson\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.config
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.manifest
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.application
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.pdb
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe.manifest
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.application
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.pdb
+\\alder-nas\staff\spearson\visual studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\ConsoleApplication2.csprojResolveAssemblyReference.cache
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.config
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.pdb
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.manifest
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.application
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.pdb
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\ConsoleApplication2.csprojResolveAssemblyReference.cache
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe.manifest
+H:\Visual Studio 2012\Projects\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.application
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.config
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.pdb
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\obj\Release\ConsoleApplication2.csprojResolveAssemblyReference.cache
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe.manifest
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.application
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.exe
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\prm35serialcommands.pdb
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.exe.manifest
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\obj\Release\prm35serialcommands.application
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\Ags.ProjectorController.dll
+C:\Users\Stuart\ConsoleApplication2\ConsoleApplication2\bin\Release\Ags.ProjectorController.pdb

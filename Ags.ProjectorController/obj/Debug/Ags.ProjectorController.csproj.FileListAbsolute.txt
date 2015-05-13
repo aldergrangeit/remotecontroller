@@ -1,0 +1,15 @@
+C:\Users\Stuart\Dropbox\ConsoleApplication2\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.dll
+C:\Users\Stuart\Dropbox\ConsoleApplication2\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.pdb
+C:\Users\Stuart\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.dll
+C:\Users\Stuart\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.pdb
+C:\Users\Stuart\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.csprojResolveAssemblyReference.cache
+C:\Users\spearson\Dropbox\ConsoleApplication2\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.dll
+C:\Users\spearson\Dropbox\ConsoleApplication2\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.pdb
+C:\Users\spearson\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.csprojResolveAssemblyReference.cache
+C:\Users\spearson\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.dll
+C:\Users\spearson\Dropbox\ConsoleApplication2\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.pdb
+E:\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.csprojResolveAssemblyReference.cache
+E:\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.dll
+E:\Ags.ProjectorController\obj\Debug\Ags.ProjectorController.pdb
+E:\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.dll
+E:\Ags.ProjectorController\bin\Debug\Ags.ProjectorController.pdb
