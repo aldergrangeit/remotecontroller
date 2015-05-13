@@ -27,7 +27,7 @@ namespace Ags.RemoteControl
             var type = typeof(IProjectorController);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface);
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface && !p.Name.EndsWith("Decorator"));
 
             var list = new List<Projector>();
 
@@ -45,7 +45,7 @@ namespace Ags.RemoteControl
                 {
                     richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " " + port);
                     Console.WriteLine(port);
-                    _controller.IsMe();
+                    // _controller.IsMe();
                 }
                 catch(Win32Exception) {
                 Console.WriteLine("Unable to query port");
@@ -59,7 +59,7 @@ namespace Ags.RemoteControl
 
             foreach (Type t in types)
             {
-                list.Add(new Projector { Controller = (IProjectorController)Activator.CreateInstance(t, ComPort) });
+                list.Add(new Projector((IProjectorController)Activator.CreateInstance(t, ComPort)));
             }
 
             comboBox1.DataSource = list;
@@ -72,7 +72,14 @@ namespace Ags.RemoteControl
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = (Projector)comboBox1.SelectedItem;
-            _controller = item.Controller;
+
+            _controller = new ControllerDecorator(item.Controller);
+
+            // hook into the message event of the controller and push that into the textbox
+            _controller.Message += (o, s) =>
+                {
+                    richTextBox1.AppendText(s + Environment.NewLine);
+                };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -151,19 +158,5 @@ namespace Ags.RemoteControl
 
         }
 
-    }
-
-    public class Projector
-    {
-        
-        public string DisplayName
-        {
-            get
-            {
-                return string.Format("{0} ({1})", Controller.Make, Controller.Model);
-            }
-        }
-
-        public IProjectorController Controller { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace Ags.ProjectorController
 
         }
 
+        public event EventHandler<string> Message;
+
         public string Make { get; set; }
 
         public string Model { get; set; }
@@ -42,6 +44,11 @@ namespace Ags.ProjectorController
         public string _reply = string.Empty;
 
         public bool IsMeBool = false;
+
+        public void ProjectorAuto()
+        {
+            throw new NotImplementedException();
+        }
 
         public void IsMe()
         {
@@ -57,6 +64,26 @@ namespace Ags.ProjectorController
             {
                 bool IsMeBool = true;
             }
+        }
+
+        public void ProjectorSelectRGB2()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ProjectorSelectVideo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ProjectorSelectSVideo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ProjectorSelectComponent()
+        {
+            throw new NotImplementedException();
         }
 
         public void PowerOn()
@@ -75,7 +102,7 @@ namespace Ags.ProjectorController
                 // Write the command required
                 _serialPort.Write(_projectorPowerOn);
                 // Output some progess data to console
-                Console.WriteLine("I have Sent " + _projectorPowerOn + " to the device, and awaiting " + _projectorResponsePowerOn + " as a response");
+                this.Message.Invoke(this,"I have Sent " + _projectorPowerOn + " to the device, and awaiting " + _projectorResponsePowerOn + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
@@ -85,20 +112,20 @@ namespace Ags.ProjectorController
                 if (_reply == _projectorResponsePowerOn)
                 {
                     //TODO Allow user feedback to richtext box in form1
-                    Console.WriteLine("Device has powered on and is ready for use");
+                    this.Message.Invoke(this,"Device has powered on and is ready for use");
                     _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
-                    Console.WriteLine("The device is not responding");
+                    this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
-                Console.WriteLine("The device is not responding");
+                this.Message.Invoke(this,"The device is not responding");
                 _serialPort.Close();
             }
         }
@@ -109,7 +136,7 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorPowerQuery);
-            Console.WriteLine("Query the device for its current state");
+            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
@@ -120,7 +147,7 @@ namespace Ags.ProjectorController
                 // Write the command required
                 _serialPort.Write(_projectorPowerOff);
                 // Output some progess data to console
-                Console.WriteLine("I have Sent " + _projectorPowerOff + " to the device, and awaiting " + _projectorResponsePowerOff + " as a response");
+                this.Message.Invoke(this,"I have Sent " + _projectorPowerOff + " to the device, and awaiting " + _projectorResponsePowerOff + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
@@ -130,20 +157,20 @@ namespace Ags.ProjectorController
                 if (_reply == _projectorResponsePowerOff)
                 {
                     //TODO Allow user feedback to richtext box in form1
-                    Console.WriteLine("Device has powered off");
+                    this.Message.Invoke(this,"Device has powered off");
                     _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
-                    Console.WriteLine("The device is not responding");
+                    this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
-                Console.WriteLine("The device is not responding");
+                this.Message.Invoke(this,"The device is not responding");
                 _serialPort.Close();
             }
         }
@@ -154,7 +181,7 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorSelectQuery);
-            Console.WriteLine("Query the device for its current state");
+            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
@@ -165,7 +192,7 @@ namespace Ags.ProjectorController
                 // Write the command required
                 _serialPort.Write(_projectorSelectRGB);
                 // Output some progess data to console
-                Console.WriteLine("I have Sent " + _projectorSelectRGB + " to the device, and awaiting " + _projectorSelectResponseRGB + " as a response");
+                this.Message.Invoke(this,"I have Sent " + _projectorSelectRGB + " to the device, and awaiting " + _projectorSelectResponseRGB + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
@@ -175,20 +202,20 @@ namespace Ags.ProjectorController
                 if (_reply == _projectorSelectResponseRGB)
                 {
                     //TODO Allow user feedback to richtext box in form1
-                    Console.WriteLine("Device has changed its source to RGB");
+                    this.Message.Invoke(this,"Device has changed its source to RGB");
                     _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
-                    Console.WriteLine("The device is not responding");
+                    this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
-                Console.WriteLine("The device is not responding");
+                this.Message.Invoke(this,"The device is not responding");
                 _serialPort.Close();
             }
         }
@@ -199,7 +226,7 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorSelectQuery);
-            Console.WriteLine("Query the device for its current state");
+            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
@@ -210,7 +237,7 @@ namespace Ags.ProjectorController
                 // Write the command required
                 _serialPort.Write(_projectorSelectHDMI);
                 // Output some progess data to console
-                Console.WriteLine("I have Sent " + _projectorSelectHDMI + " to the device, and awaiting " + _projectorSelectResponseHDMI + " as a response");
+                this.Message.Invoke(this,"I have Sent " + _projectorSelectHDMI + " to the device, and awaiting " + _projectorSelectResponseHDMI + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
@@ -220,13 +247,13 @@ namespace Ags.ProjectorController
                 if (_reply == _projectorSelectResponseHDMI)
                 {
                     //TODO Allow user feedback to richtext box in form1
-                    Console.WriteLine("Device has has changed its source to HDMI");
+                    this.Message.Invoke(this,"Device has has changed its source to HDMI");
                     _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
-                    Console.WriteLine("The device is not responding");
+                    this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
             }
