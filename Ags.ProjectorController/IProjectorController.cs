@@ -23,15 +23,9 @@ namespace Ags.ProjectorController
         void ProjectorSelectRGB();
         void ProjectorSelectHDMI();
         void ProjectorFreeze();
-        
-        void ProjectorAuto();
         void IsMe();
-        void ProjectorSelectRGB2();
 
-        void ProjectorSelectVideo();
-
-        void ProjectorSelectSVideo();
-
-        void ProjectorSelectComponent();
+        // Removed older initial commands that will not be in the released version as most of the commands are not supported by
+        // various projectors
     }
 }
