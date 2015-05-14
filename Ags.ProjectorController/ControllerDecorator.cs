@@ -82,44 +82,9 @@
             this.Message.Invoke(controller, "Complete");
         }
 
-        public void ProjectorAuto()
-        {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorAuto();
-            this.Message.Invoke(controller, "Complete");
-        }
-
         public void IsMe()
         {
             controller.IsMe();            
-        }
-
-        public void ProjectorSelectRGB2()
-        {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectRGB2();
-            this.Message.Invoke(controller, "Complete");
-        }
-
-        public void ProjectorSelectVideo()
-        {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectVideo();
-            this.Message.Invoke(controller, "Complete");
-        }
-
-        public void ProjectorSelectSVideo()
-        {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectSVideo();
-            this.Message.Invoke(controller, "Complete");
-        }
-
-        public void ProjectorSelectComponent()
-        {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectComponent();
-            this.Message.Invoke(controller, "Complete");
         }
     }
 }
