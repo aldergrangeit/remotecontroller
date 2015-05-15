@@ -37,8 +37,6 @@ namespace Ags.ProjectorController
 
         public string Model { get; set; }
 
-        public bool IsMeBool = false;
-
         public string _reply = string.Empty;
 
         public void PowerOn()
