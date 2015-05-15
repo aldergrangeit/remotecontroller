@@ -225,30 +225,5 @@ namespace Ags.ProjectorController
             // Close the serial port
             _serialPort.Close();
         }
-
-        public void ProjectorAuto()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ProjectorSelectRGB2()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ProjectorSelectVideo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ProjectorSelectSVideo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ProjectorSelectComponent()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
