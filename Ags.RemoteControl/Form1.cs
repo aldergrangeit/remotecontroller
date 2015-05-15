@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Ags.RemoteControl
 {
@@ -18,6 +19,18 @@ namespace Ags.RemoteControl
     public partial class Form1 : Form
     {
         private IProjectorController _controller;
+        private SerialPort _serialPort;
+        private const string _casioprojectorPowerOn = "~PN\r";
+        private const string _casioprojectorResponsePowerOn = "On";
+        private const string _casioprojectorPowerOff = "~PF\r";
+        private const string _casioprojectorResponsePowerOff = "Off";
+        private const string _casioprojectorPowerQuery = "~qP\r";
+        private const string _prometheanprojectorPowerOn = "~PN\r";
+        private const string _prometheanprojectorResponsePowerOn = "On";
+        private const string _prometheanprojectorPowerOff = "~PF\r";
+        private const string _prometheanprojectorResponsePowerOff = "Off";
+        private const string _prometheanprojectorPowerQuery = "~qP\r";
+        private string _reply = string.Empty;
 
         public Form1()
         {
@@ -37,23 +50,76 @@ namespace Ags.RemoteControl
             string[] ports = SerialPort.GetPortNames();
 
             richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " The following Ports where found");
-            Console.WriteLine("The following serial ports were found:");
 
             foreach (string port in ports)
             {
                 try
                 {
                     richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " " + port);
-                    Console.WriteLine(port);
-                    // _controller.IsMe();
+                    _serialPort = new SerialPort(port);
+                    //Lets see if the current projector is a Casio
+                    //State what port i am using
+                    richTextBox1.AppendText("Checking for a Casio Projector - " + port);
+                    // Open Serial Port
+                    _serialPort.Open();
+                    // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
+                    _serialPort.Write(_casioprojectorPowerQuery);
+                    // Lets wait for the device to respond
+                    Thread.Sleep(2);
+                    // Put the reply into a string
+                    _reply = _serialPort.ReadExisting();
+                    if (_reply == _casioprojectorResponsePowerOff)
+                    {
+                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
+                        ComPort = port;
+                    }
+                    if (_reply == _casioprojectorResponsePowerOn)
+                    {
+                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
+                        ComPort = port;
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(DateTime.Today.TimeOfDay + " I cannot find a Casio projector on any of the current ports");
+                    }
+                    //Lets see if the current projector is a Promethean
+                    //State what port i am using
+                    richTextBox1.AppendText("Checking for a Promethean Projector - " + port);
+                    // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
+                    _serialPort.Write(_prometheanprojectorPowerQuery);
+                    // Lets wait for the device to respond
+                    Thread.Sleep(2);
+                    // Put the reply into a string
+                    _reply = _serialPort.ReadExisting();
+                    if (_reply == _prometheanprojectorResponsePowerOff)
+                    {
+                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Pro"));
+                        ComPort = port;
+                    }
+                    if (_reply == _prometheanprojectorResponsePowerOn)
+                    {
+                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Pro"));
+                        ComPort = port;
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(DateTime.Today.TimeOfDay + " I cannot find a Promethean projector on any of the current ports");
+                    }
+                    _serialPort.Close();
                 }
-                catch(Win32Exception) {
-                Console.WriteLine("Unable to query port");
+                catch (Win32Exception)
+                {
+                    richTextBox1.AppendText("Unable to query port");
+                }
+                catch (System.IO.IOException)
+                {
+                    richTextBox1.AppendText("Unable to query ports");
                 }
             }
 
             if (string.IsNullOrEmpty(ComPort))
             {
+
                 ComPort = "COM1";
             }
 
@@ -71,6 +137,7 @@ namespace Ags.RemoteControl
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             var item = (Projector)comboBox1.SelectedItem;
 
             _controller = new ControllerDecorator(item.Controller);
@@ -78,13 +145,14 @@ namespace Ags.RemoteControl
             // hook into the message event of the controller and push that into the textbox
             _controller.Message += (o, s) =>
                 {
-                    richTextBox1.AppendText(s + Environment.NewLine);
+                    richTextBox1.AppendText(s + Environment.NewLine + DateTime.Today.TimeOfDay + " ");
                 };
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Lets do some querying to select the correct controller
+       
+
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -155,7 +223,7 @@ namespace Ags.RemoteControl
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-
+            richTextBox1.ScrollToCaret();
         }
 
     }
