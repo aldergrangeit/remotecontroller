@@ -7,24 +7,22 @@ namespace Ags.ProjectorController
     public class CasioController : IProjectorController
     {
 
-        private const string _projectorPowerOn = "~PN\r";
-        private const string _projectorResponsePowerOn = "On";
-        private const string _projectorPowerOff = "~PF\r";
-        private const string _projectorResponsePowerOff = "Off";
-        private const string _projectorPowerQuery = "~qP\r";
-        private const string _projectorSelectRGB = "~SR\r";
-        private const string _projectorSelectResponseRGB = "RGB";
-        private const string _projectorSelectResponseHDMI = "HDMI";
-        private const string _projectorSelectHDMI = "~SH\r";
-        private const string _projectorSelectQuery = "~qS\r";
-        private const string _projectorFreeze = "~SH\r";
-        private const string _projectorOnReponseSelectFreeze = "On";
-        private const string _projectorOffReponseSelectFreeze = "Off";
-        private const string _projectorFreezeQuery = "~qZ\r";
-
+        private const string _projectorPowerOn = "(PWR1)";
+        private const string _projectorResponsePowerOn = "(0-1,1)";
+        private const string _projectorPowerOff = "(PWR0)";
+        private const string _projectorResponsePowerOff = "(0-1,0)";
+        private const string _projectorPowerQuery = "(PWR?)";
+        private const string _projectorSelectRGB = "(SRC0)";
+        private const string _projectorSelectResponseRGB = "(1-7,0)";
+        private const string _projectorSelectResponseHDMI = "(1-7,7)";
+        private const string _projectorSelectHDMI = "(SRC7)";
+        private const string _projectorSelectQuery = "(SRC?)";
+        private const string _projectorFreeze = "(BLK1)";
+        private const string _projectorOnReponseSelectFreeze = "(0-1,1)";
+        private const string _projectorOffReponseSelectFreeze = "(0-1,0)";
+        private const string _projectorFreezeQuery = "(BLK?)";
 
         private SerialPort _serialPort;
-
 
         public CasioController(string serialPort)
         {
@@ -43,24 +41,10 @@ namespace Ags.ProjectorController
 
         public string _reply = string.Empty;
 
-        public void IsMe()
-        {
-            _serialPort.Open();
-            _serialPort.Write(_projectorPowerQuery);
-            Thread.Sleep(2);
-            _reply = _serialPort.ReadExisting();
-            if (_reply == "On")
-            {
-                bool IsMeBool = true;
-            }
-            if (_reply == "Off")
-            {
-                bool IsMeBool = true;
-            }
-        }
-
         public void PowerOn()
         {
+            //State what port i am using
+            this.Message.Invoke(this, _serialPort.PortName);
             // Open Serial Port
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need

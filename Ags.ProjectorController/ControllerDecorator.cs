@@ -82,9 +82,5 @@
             this.Message.Invoke(controller, "Complete");
         }
 
-        public void IsMe()
-        {
-            controller.IsMe();            
-        }
     }
 }

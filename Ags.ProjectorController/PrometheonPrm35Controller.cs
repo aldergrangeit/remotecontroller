@@ -50,22 +50,6 @@ namespace Ags.ProjectorController
             throw new NotImplementedException();
         }
 
-        public void IsMe()
-        {
-            _serialPort.Open();
-            _serialPort.Write(_projectorPowerQuery);
-            Thread.Sleep(2);
-            _reply = _serialPort.ReadExisting();
-            if (_reply == "On")
-            {
-                bool IsMeBool = true;
-            }
-            if (_reply == "Off")
-            {
-                bool IsMeBool = true;
-            }
-        }
-
         public void ProjectorSelectRGB2()
         {
             throw new NotImplementedException();
