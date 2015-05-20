@@ -1,20 +1,14 @@
 ﻿using Ags.ProjectorController;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Collections;
 
 namespace Ags.RemoteControl
 {
-    using Microsoft.Win32;
 
     public partial class Form1 : Form
     {
@@ -36,7 +30,6 @@ namespace Ags.RemoteControl
         {
             InitializeComponent();
 
-
             var type = typeof(IProjectorController);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
@@ -46,78 +39,6 @@ namespace Ags.RemoteControl
 
             string ComPort = string.Empty;
             string Controller = string.Empty;
-
-            string[] ports = SerialPort.GetPortNames();
-
-            richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " The following Ports where found");
-
-            foreach (string port in ports)
-            {
-                richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " " + port);
-            }
-
-            richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Attempting to Scan for projectors on the above ports");
-
-            foreach (string port in ports)
-            {
-                try
-                {
-                    _serialPort = new SerialPort(port);
-                    //Lets see if the current projector is a Casio
-                    //State what port i am using
-                    richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Casio Scan - " + port);
-                    // Open Serial Port
-                    _serialPort.Open();
-                    // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
-                    _serialPort.Write(_casioprojectorPowerQuery);
-                    // Lets wait for the device to respond
-                    Thread.Sleep(2);
-                    // Put the reply into a string
-                    _reply = _serialPort.ReadExisting();
-                    if (_reply == _casioprojectorResponsePowerOff)
-                    {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
-                        ComPort = port;
-                    }
-                    if (_reply == _casioprojectorResponsePowerOn)
-                    {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
-                        ComPort = port;
-                    }
-                    else
-                    {
-                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Can't find Casio projector on " + port);
-                    }
-                    //Lets see if the current projector is a Promethean
-                    //State what port i am using
-                    richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Promethean Scan - " + port);
-                    // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
-                    _serialPort.Write(_prometheanprojectorPowerQuery);
-                    // Lets wait for the device to respond
-                    Thread.Sleep(2);
-                    // Put the reply into a string
-                    _reply = _serialPort.ReadExisting();
-                    if (_reply == _prometheanprojectorResponsePowerOff)
-                    {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Pro"));
-                        ComPort = port;
-                    }
-                    if (_reply == _prometheanprojectorResponsePowerOn)
-                    {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Pro"));
-                        ComPort = port;
-                    }
-                    else
-                    {
-                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Can't find Promethean Projector on " + port);
-                    }
-                    _serialPort.Close();
-                }
-                catch (System.IO.IOException)
-                {
-                    richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Unable to query port " + port);
-                }
-            }
 
             if (string.IsNullOrEmpty(ComPort))
             {
@@ -140,7 +61,7 @@ namespace Ags.RemoteControl
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            var item = (Projector)comboBox1.SelectedItem;
+           var item = (Projector)comboBox1.SelectedItem;
 
             _controller = new ControllerDecorator(item.Controller);
 
@@ -153,8 +74,7 @@ namespace Ags.RemoteControl
 
         private void Form1_Load(object sender, EventArgs e)
         {
-       
-
+            scanforprojectors();
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -245,6 +165,11 @@ namespace Ags.RemoteControl
 
         private void button6_Click(object sender, EventArgs e)
         {
+            scanforprojectors();
+        }
+        
+        public void scanforprojectors()
+        {
             string[] ports = SerialPort.GetPortNames();
             foreach (string port in ports)
             {
@@ -265,16 +190,23 @@ namespace Ags.RemoteControl
                     Thread.Sleep(200);
                     // Put the reply into a string
                     _reply = _serialPort.ReadExisting();
-                    richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Recieved " + _reply);
+                    if (_reply == "")
+                    {
+                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Did not recived a reply ");
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Recived " + _reply);
+                    }
                     if (_reply == _casioprojectorResponsePowerOff)
                     {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
-                        ComPort = port;
+                      //  comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
+                      //  ComPort = port;
                     }
                     if (_reply == _casioprojectorResponsePowerOn)
                     {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
-                        ComPort = port;
+                      //  comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("Casio"));
+                       // ComPort = port;
                     }
                     else
                     {
@@ -289,16 +221,23 @@ namespace Ags.RemoteControl
                     Thread.Sleep(200);
                     // Put the reply into a string
                     _reply = _serialPort.ReadExisting();
-                    richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Recieved " + _reply);
+                    if (_reply == "")
+                    {
+                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Did not recived a reply ");
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Recived " + _reply);
+                    }
                     if (_reply == _prometheanprojectorResponsePowerOff)
                     {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("P"));
-                        ComPort = port;
+                        //comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("P"));
+                       // ComPort = port;
                     }
                     if (_reply == _prometheanprojectorResponsePowerOn)
                     {
-                        comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("P"));
-                        ComPort = port;
+                      //  comboBox1.SelectedItem = list.FirstOrDefault(x => x.DisplayName.StartsWith("P"));
+                        //ComPort = port;
                     }
                     else
                     {
@@ -311,7 +250,7 @@ namespace Ags.RemoteControl
                     richTextBox1.AppendText(Environment.NewLine + DateTime.Today.TimeOfDay + " Unable to query port " + port);
                 }
             }
-        }
-
+        
+         }
     }
 }

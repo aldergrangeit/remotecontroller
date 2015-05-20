@@ -40,10 +40,8 @@ namespace Ags.ProjectorController
         public string Make { get; set; }
 
         public string Model { get; set; }
-
+        
         public string _reply = string.Empty;
-
-        public bool IsMeBool = false;
 
         public void PowerOn()
         {
