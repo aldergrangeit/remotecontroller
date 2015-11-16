@@ -56,30 +56,30 @@
 
         public void PowerOff()
         {
-            this.Message.Invoke(controller, "Starting");
+            this.Message.Invoke(controller, "Starting Power Off");
             controller.PowerOff();
-            this.Message.Invoke(controller, "Complete");
+            this.Message.Invoke(controller, "Power Off Complete");
         }
 
         public void ProjectorSelectRGB()
         {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectRGB();
-            this.Message.Invoke(controller, "Complete");
+            this.Message.Invoke(controller, "Starting Select RGB");
+            controller.ProjectorSelectRGB();
+            this.Message.Invoke(controller, "Select RGB Complete");
         }
 
         public void ProjectorSelectHDMI()
         {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorSelectHDMI();
-            this.Message.Invoke(controller, "Complete");
+            this.Message.Invoke(controller, "Starting Select HDMI");
+            controller.ProjectorSelectHDMI();
+            this.Message.Invoke(controller, "Select HDMI Complete");
         }
 
         public void ProjectorFreeze()
         {
-            this.Message.Invoke(controller, "Starting");
-            this.ProjectorFreeze();
-            this.Message.Invoke(controller, "Complete");
+            this.Message.Invoke(controller, "Starting Projector Freeze");
+            controller.ProjectorFreeze();
+            this.Message.Invoke(controller, "Projector Freeze Complete");
         }
 
     }

@@ -30,6 +30,8 @@ namespace Ags.ProjectorController
         public PrometheanPrm35Controller(string serialPort)
         {
             _serialPort = new SerialPort(serialPort);
+            // Set baud
+            _serialPort.BaudRate = 9600;
             Make = "Promethean";
             Model = "PRM-35";
 

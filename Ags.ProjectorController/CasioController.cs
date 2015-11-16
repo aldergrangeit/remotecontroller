@@ -27,6 +27,8 @@ namespace Ags.ProjectorController
         public CasioController(string serialPort)
         {
             _serialPort = new SerialPort(serialPort);
+            // Set baud
+            _serialPort.BaudRate = 19200;
             Make = "Casio";
             Model = "All";
         }
@@ -51,7 +53,6 @@ namespace Ags.ProjectorController
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            _serialPort.Close();
             // Are we in an off state
             if (_reply == _projectorResponsePowerOff)
             {
@@ -63,23 +64,27 @@ namespace Ags.ProjectorController
                 Thread.Sleep(6000);
                 // Ask the device its current status
                 _serialPort.Write(_projectorPowerQuery);
+                Thread.Sleep(6000);
                 _reply = _serialPort.ReadExisting();
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
                 if (_reply == _projectorResponsePowerOn)
                 {
                     //TODO Allow user feedback to richtext box in form1
                     this.Message.Invoke(this,"Device has powered on and is ready for use");
+                    _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
                     this.Message.Invoke(this,"The device is not responding");
+                    _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
                 this.Message.Invoke(this,"The device is not responding");
+                _serialPort.Close();
             }
         }
 
@@ -95,7 +100,6 @@ namespace Ags.ProjectorController
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            _serialPort.Close();
             // Are we in an on state
             if (_reply == _projectorResponsePowerOn)
             {
@@ -107,17 +111,20 @@ namespace Ags.ProjectorController
                 Thread.Sleep(6000);
                 // Ask the device its current status
                 _serialPort.Write(_projectorPowerQuery);
+                Thread.Sleep(6000);
                 _reply = _serialPort.ReadExisting();
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
                 if (_reply == _projectorResponsePowerOff)
                 {
                     //TODO Allow user feedback to richtext box in form1
                     this.Message.Invoke(this,"Device has powered off");
+                    _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
                     this.Message.Invoke(this,"The device is not responding");
+                    _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
@@ -152,23 +159,25 @@ namespace Ags.ProjectorController
                 // Ask the device its current status
                 _serialPort.Write(_projectorSelectQuery);
                 _reply = _serialPort.ReadExisting();
-                _serialPort.Close();
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
                 if (_reply == _projectorSelectResponseRGB)
                 {
                     //TODO Allow user feedback to richtext box in form1
                     this.Message.Invoke(this,"Device has powered off");
+                    _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
                     this.Message.Invoke(this,"The device is not responding");
+                    _serialPort.Close();
                 }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
                 this.Message.Invoke(this,"The device is not responding");
+                _serialPort.Close();
             }
         }
 
@@ -196,17 +205,18 @@ namespace Ags.ProjectorController
                 // Ask the device its current status
                 _serialPort.Write(_projectorSelectQuery);
                 _reply = _serialPort.ReadExisting();
-                _serialPort.Close();
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
                 if (_reply == _projectorSelectResponseHDMI)
                 {
                     //TODO Allow user feedback to richtext box in form1
                     this.Message.Invoke(this,"Device has powered off");
+                    _serialPort.Close();
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
                 {
                     this.Message.Invoke(this,"The device is not responding");
+                    _serialPort.Close();
                 }
             }
         }
