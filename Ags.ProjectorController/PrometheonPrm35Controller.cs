@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace Ags.ProjectorController
 {
@@ -16,14 +17,19 @@ namespace Ags.ProjectorController
         private const string _projectorResponsePowerOff = "Off";
         private const string _projectorPowerQuery = "~qP\r";
         private const string _projectorSelectRGB = "~SR\r";
-        private const string _projectorSelectResponseRGB = "RGB";
+        private const string _projectorSelectResponseRGB = "RGB1";
+        private const string _projectorSelectResponseNone = "None";
         private const string _projectorSelectResponseHDMI = "HDMI";
         private const string _projectorSelectHDMI = "~SH\r";
         private const string _projectorSelectQuery = "~qS\r";
-        private const string _projectorFreeze = "~SH\r";
+        private const string _projectorFreeze = "~rF\r";
         private const string _projectorOnReponseSelectFreeze = "On";
         private const string _projectorOffReponseSelectFreeze = "Off";
         private const string _projectorFreezeQuery = "~qZ\r";
+        private const string _projectorBlankQuery = "~qK\r";
+        private const string _projectorBlankResponseOn = "On";
+        private const string _projectorBlankResponseOff = "Off";
+        private const string _projectorBlank = "~rB\r";
 
         private SerialPort _serialPort;
 
@@ -45,6 +51,10 @@ namespace Ags.ProjectorController
         
         public string _reply = string.Empty;
 
+        public string _replymod = string.Empty;
+
+        public bool job = false;
+
         public void PowerOn()
         {
             // Open Serial Port
@@ -55,37 +65,49 @@ namespace Ags.ProjectorController
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // Are we in an off state
-            if (_reply == _projectorResponsePowerOff)
+            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+            // Are we in an on state allready?
+            if (_replymod == _projectorResponsePowerOn)
+                {
+                    // We are allready on
+                    this.Message.Invoke(this, "Device is allready powered on");
+                    _serialPort.Close();
+                }
+            // We are in an off state, lets turn on
+            else if (_replymod == _projectorResponsePowerOff)
             {
-                // Write the command required
-                _serialPort.Write(_projectorPowerOn);
-                // Output some progess data to console
-                this.Message.Invoke(this,"I have Sent " + _projectorPowerOn + " to the device, and awaiting " + _projectorResponsePowerOn + " as a response");
-                // Allow a little time for the device to action
-                Thread.Sleep(6000);
-                // Ask the device its current status
-                _serialPort.Write(_projectorPowerQuery);
-                _reply = _serialPort.ReadExisting();
-                // Are we now in a On state and if not lets start to feedback to user for futher investigation
-                if (_reply == _projectorResponsePowerOn)
-                {
-                    //TODO Allow user feedback to richtext box in form1
-                    this.Message.Invoke(this,"Device has powered on and is ready for use");
-                    _serialPort.Close();
-                }
-                // Lets assume the device is not connected anymore or not responding
-                else
-                {
-                    this.Message.Invoke(this,"The device is not responding");
-                    _serialPort.Close();
-                }
+                    // Write the command required
+                    _serialPort.Write(_projectorPowerOn);
+                    // Allow a little time for the device to action
+                    Thread.Sleep(20000);
+                    // Ask the device its current status
+                    _serialPort.Write(_projectorPowerQuery);
+                    // Allow time for device to respond
+                    Thread.Sleep(6000);
+                    // Get the response into a string
+                    _reply = _serialPort.ReadExisting();
+                    // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                    _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                    // Are we now in a On state and if not lets start to feedback to user for futher investigation
+                    if (_replymod == _projectorResponsePowerOn)
+                    {
+                        // All done, ITS ALLIVE!
+                        this.Message.Invoke(this,"Device has powered on and is ready for use");
+                        _serialPort.Close();
+                    }
+                    else
+                    {
+                        // Lets assume the device is not connected anymore or not responding
+                        this.Message.Invoke(this, "The device is not responding");
+                        _serialPort.Close();
+                    }
             }
             // Lets assume the device is not connected anymore or not responding
             else
             {
-                this.Message.Invoke(this,"The device is not responding");
-                _serialPort.Close();
+                    this.Message.Invoke(this,"The device is not responding");
+                    _serialPort.Close();
             }
         }
 
@@ -95,29 +117,47 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorPowerQuery);
-            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
-            Thread.Sleep(6000);
+            Thread.Sleep(2000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
+            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
-            if (_reply == _projectorResponsePowerOn)
-            {
-                // Write the command required
-                _serialPort.Write(_projectorPowerOff);
-                // Output some progess data to console
-                this.Message.Invoke(this,"I have Sent " + _projectorPowerOff + " to the device, and awaiting " + _projectorResponsePowerOff + " as a response");
-                // Allow a little time for the device to action
-                Thread.Sleep(6000);
-                // Ask the device its current status
-                _serialPort.Write(_projectorPowerQuery);
-                _reply = _serialPort.ReadExisting();
-                // Are we now in a On state and if not lets start to feedback to user for futher investigation
-                if (_reply == _projectorResponsePowerOff)
+                if (_replymod == _projectorResponsePowerOff)
                 {
-                    //TODO Allow user feedback to richtext box in form1
-                    this.Message.Invoke(this,"Device has powered off");
+                    // We are allready off
+                    this.Message.Invoke(this, "Device is allready powered off");
                     _serialPort.Close();
+                }
+                // We are in a on state, lets turn off
+                else if (_replymod == _projectorResponsePowerOn)
+                {
+                    // Write the command required
+                    _serialPort.Write(_projectorPowerOff);
+                    // Allow a little time for the device to action
+                    Thread.Sleep(6000);
+                    // Ask the device its current status
+                    _serialPort.Write(_projectorPowerQuery);
+                    // Lets wait for the projector to respond
+                    Thread.Sleep(6000);
+                    // Put the response into a string
+                    _reply = _serialPort.ReadExisting();
+                    // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                    _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                        // Are we now in a On state
+                        if (_replymod == _projectorResponsePowerOff)
+                        {
+                            // Device is now off WOOP
+                            this.Message.Invoke(this,"Device has powered off");
+                            _serialPort.Close();
+                        }
+                        else
+                        {
+                            // Lets assume the device is not connected anymore or not responding
+                            this.Message.Invoke(this,"The device is not responding");
+                            _serialPort.Close();
+                        }
                 }
                 // Lets assume the device is not connected anymore or not responding
                 else
@@ -125,13 +165,6 @@ namespace Ags.ProjectorController
                     this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
-            }
-            // Lets assume the device is not connected anymore or not responding
-            else
-            {
-                this.Message.Invoke(this,"The device is not responding");
-                _serialPort.Close();
-            }
         }
 
         public void ProjectorSelectRGB()
@@ -140,33 +173,41 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorSelectQuery);
-            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
+            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
-            if (_reply == _projectorSelectResponseHDMI)
+            if (_replymod == _projectorSelectResponseRGB)
+            {
+                this.Message.Invoke(this, "The device is allready on RGB");
+                _serialPort.Close();
+            }
+            else if (_replymod == _projectorSelectResponseHDMI | _replymod == _projectorSelectResponseNone)
             {
                 // Write the command required
                 _serialPort.Write(_projectorSelectRGB);
-                // Output some progess data to console
-                this.Message.Invoke(this,"I have Sent " + _projectorSelectRGB + " to the device, and awaiting " + _projectorSelectResponseRGB + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
                 _serialPort.Write(_projectorSelectQuery);
+                // Put the reply into a string
                 _reply = _serialPort.ReadExisting();
+                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
-                if (_reply == _projectorSelectResponseRGB)
+                if (_replymod == _projectorSelectResponseRGB)
                 {
-                    //TODO Allow user feedback to richtext box in form1
+                    // Device has selected the correct source
                     this.Message.Invoke(this,"Device has changed its source to RGB");
                     _serialPort.Close();
                 }
-                // Lets assume the device is not connected anymore or not responding
+                
                 else
                 {
+                    // Lets assume the device is not connected anymore or not responding
                     this.Message.Invoke(this,"The device is not responding");
                     _serialPort.Close();
                 }
@@ -185,47 +226,199 @@ namespace Ags.ProjectorController
             _serialPort.Open();
             // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorSelectQuery);
-            this.Message.Invoke(this,"Query the device for its current state");
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
+            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
-            if (_reply == _projectorSelectResponseRGB)
+            if (_replymod == _projectorSelectResponseRGB | _replymod == _projectorSelectResponseNone)
             {
                 // Write the command required
                 _serialPort.Write(_projectorSelectHDMI);
-                // Output some progess data to console
-                this.Message.Invoke(this,"I have Sent " + _projectorSelectHDMI + " to the device, and awaiting " + _projectorSelectResponseHDMI + " as a response");
                 // Allow a little time for the device to action
                 Thread.Sleep(6000);
                 // Ask the device its current status
                 _serialPort.Write(_projectorSelectQuery);
+                // Let the device respond
+                Thread.Sleep(6000);
+                // Put the respond into a string
                 _reply = _serialPort.ReadExisting();
+                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                // We are allready in HDMI
+                if (_replymod == _projectorSelectResponseHDMI)
+                {
+                    this.Message.Invoke(this, "Device has has changed its source to HDMI");
+                    _serialPort.Close();
+                }
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
-                if (_reply == _projectorSelectResponseHDMI)
-                {
-                    //TODO Allow user feedback to richtext box in form1
-                    this.Message.Invoke(this,"Device has has changed its source to HDMI");
-                    _serialPort.Close();
-                }
+                    if (_replymod == _projectorSelectResponseHDMI)
+                    {
+                        this.Message.Invoke(this,"Device has has changed its source to HDMI");
+                        _serialPort.Close();
+                    }
                 // Lets assume the device is not connected anymore or not responding
-                else
-                {
-                    this.Message.Invoke(this,"The device is not responding");
-                    _serialPort.Close();
-                }
+                    if (_replymod == _projectorSelectResponseNone)
+                    {
+                        this.Message.Invoke(this, "Unable to change input, this is due to the source being unavailable");
+                        _serialPort.Close();
+                    }
+                    else
+                    {
+                        this.Message.Invoke(this,"The device is not responding");
+                        _serialPort.Close();
+                    }
+            }
+            // Lets assume the device is not connected anymore or not responding
+            else
+            {
+                this.Message.Invoke(this, "The device is not responding 1");
+                _serialPort.Close();
             }
         }
 
         public void ProjectorFreeze()
         {
-            // Open Serial Port
-            _serialPort.Open();
-            // Send projector freeze
-            _serialPort.Write(_projectorFreeze);
-            // Close the serial port
-            _serialPort.Close();
+            {
+                // Open serial port
+                _serialPort.Open();
+                // Query projector for current status
+                _serialPort.Write(_projectorFreezeQuery);
+                // Sleep to allow the projector to react
+                Thread.Sleep(2000);
+                // Write the reply into a string
+                _reply = _serialPort.ReadExisting();
+                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                // Make sure its not a null result
+                if (_replymod != null)
+                {
+                    job = false;
+                    // We are not froze
+                    if (_replymod == _projectorOffReponseSelectFreeze & job == false)
+                    {
+                        // Send the blnk command
+                        _serialPort.Write(_projectorFreeze);
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        // Query the projector
+                        _serialPort.Write(_projectorFreezeQuery);
+                        // Place repy into string
+                        Thread.Sleep(1000);
+                        _reply = _serialPort.ReadExisting();
+                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                        if (_replymod == _projectorOnReponseSelectFreeze)
+                        {
+                            this.Message.Invoke(this, "The device is froze");
+                            job = true;
+                        }
+
+                    }
+                    // We are blanked
+                    if (_replymod == _projectorOnReponseSelectFreeze & job == false)
+                    {
+                        // Send the blnk command
+                        _serialPort.Write(_projectorFreeze);
+                        // Query the projector
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        _serialPort.Write(_projectorFreezeQuery);
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        // Place reply into string
+                        _reply = _serialPort.ReadExisting();
+                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                        if (_replymod == _projectorOffReponseSelectFreeze)
+                        {
+                            this.Message.Invoke(this, "The device is free");
+                            job = true;
+                        }
+                    }
+                    _serialPort.Close();
+                }
+                else
+                {
+                    // Lets assume the device is not connected anymore or not responding
+                    this.Message.Invoke(this, "The device is not responding");
+                    _serialPort.Close();
+                }
+
+            }
+        }
+
+        public void ProjectorBlank()
+        {
+            {
+                // Open serial port
+                _serialPort.Open();
+                // Query projector for current status
+                _serialPort.Write(_projectorBlankQuery);
+                // Sleep to allow the projector to react
+                Thread.Sleep(1000);
+                // Write the reply into a string
+                _reply = _serialPort.ReadExisting();
+                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                // Make sure its not a null result
+                if (_replymod != null)
+                {
+                    job = false;
+                    // We are blanked allready
+                    if (_replymod == _projectorBlankResponseOn & job == false)
+                    {
+                        // Send the blnk command
+                        _serialPort.Write(_projectorBlank);
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        // Query the projector
+                        _serialPort.Write(_projectorBlankQuery);
+                        // Place repy into string
+                        Thread.Sleep(1000);
+                        _reply = _serialPort.ReadExisting();
+                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                        if (_replymod == _projectorBlankResponseOff)
+                        {
+                            this.Message.Invoke(this, "The device is unblanked");
+                            job = true;
+                        }
+
+                    }
+                    // We are not blanked
+                    if (_replymod == _projectorBlankResponseOff & job == false)
+                    {
+                        // Send the blnk command
+                        _serialPort.Write(_projectorBlank);
+                        // Query the projector
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        _serialPort.Write(_projectorBlankQuery);
+                        // Let the projector react
+                        Thread.Sleep(1000);
+                        // Place reply into string
+                        _reply = _serialPort.ReadExisting();
+                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
+                        if (_replymod == _projectorBlankResponseOn)
+                        {
+                            this.Message.Invoke(this, "The device is blanked");
+                            job = true;
+                        }
+                    }
+                    _serialPort.Close();
+                }
+                else
+                {
+                    // Lets assume the device is not connected anymore or not responding
+                    this.Message.Invoke(this, "The device is not responding");
+                    _serialPort.Close();
+                }
+
+            }
         }
     }
 }

@@ -49,37 +49,44 @@
 
         public void PowerOn()
         {
-            this.Message.Invoke(controller, "Starting Power On");
+            this.Message.Invoke(controller, "Processing, please wait");
             controller.PowerOn();
-            this.Message.Invoke(controller, "Power On Complete");
+            //this.Message.Invoke(controller, "Power On Complete");
         }
 
         public void PowerOff()
         {
-            this.Message.Invoke(controller, "Starting Power Off");
+            this.Message.Invoke(controller, "Processing, please wait");
             controller.PowerOff();
-            this.Message.Invoke(controller, "Power Off Complete");
+            //this.Message.Invoke(controller, "Power Off Complete");
         }
 
         public void ProjectorSelectRGB()
         {
-            this.Message.Invoke(controller, "Starting Select RGB");
+            this.Message.Invoke(controller, "Processing, please wait");
             controller.ProjectorSelectRGB();
-            this.Message.Invoke(controller, "Select RGB Complete");
+            //this.Message.Invoke(controller, "Select RGB Complete");
         }
 
         public void ProjectorSelectHDMI()
         {
-            this.Message.Invoke(controller, "Starting Select HDMI");
+            this.Message.Invoke(controller, "Processing, please wait");
             controller.ProjectorSelectHDMI();
-            this.Message.Invoke(controller, "Select HDMI Complete");
+            //this.Message.Invoke(controller, "Select HDMI Complete");
         }
 
         public void ProjectorFreeze()
         {
-            this.Message.Invoke(controller, "Starting Projector Freeze");
+            this.Message.Invoke(controller, "Processing, please wait");
             controller.ProjectorFreeze();
-            this.Message.Invoke(controller, "Projector Freeze Complete");
+            //this.Message.Invoke(controller, "Projector Freeze Complete");
+        }
+
+        public void ProjectorBlank()
+        {
+            this.Message.Invoke(controller, "Processing, please wait");
+            controller.ProjectorBlank();
+            //this.Message.Invoke(controller, "Projector Blank Complete");
         }
 
     }
