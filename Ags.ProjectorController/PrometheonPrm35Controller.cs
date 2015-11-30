@@ -65,13 +65,13 @@ namespace Ags.ProjectorController
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
             _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
-            // Are we in an on state allready?
+            // Are we in an on state already?
             if (_replymod == _projectorResponsePowerOn)
                 {
-                    // We are allready on
-                    this.Message.Invoke(this, "Device is allready powered on");
+                    // We are already on
+                    this.Message.Invoke(this, "Device is already powered on");
                     _serialPort.Close();
                 }
             // We are in an off state, lets turn on
@@ -87,12 +87,12 @@ namespace Ags.ProjectorController
                     Thread.Sleep(6000);
                     // Get the response into a string
                     _reply = _serialPort.ReadExisting();
-                    // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                    // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                     _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                     // Are we now in a On state and if not lets start to feedback to user for futher investigation
                     if (_replymod == _projectorResponsePowerOn)
                     {
-                        // All done, ITS ALLIVE!
+                        // All done, ITS ALIVE!
                         this.Message.Invoke(this,"Device has powered on and is ready for use");
                         _serialPort.Close();
                     }
@@ -121,13 +121,13 @@ namespace Ags.ProjectorController
             Thread.Sleep(2000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
             _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
                 if (_replymod == _projectorResponsePowerOff)
                 {
-                    // We are allready off
-                    this.Message.Invoke(this, "Device is allready powered off");
+                    // We are already off
+                    this.Message.Invoke(this, "Device is already powered off");
                     _serialPort.Close();
                 }
                 // We are in a on state, lets turn off
@@ -143,7 +143,7 @@ namespace Ags.ProjectorController
                     Thread.Sleep(6000);
                     // Put the response into a string
                     _reply = _serialPort.ReadExisting();
-                    // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                    // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                     _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                         // Are we now in a On state
                         if (_replymod == _projectorResponsePowerOff)
@@ -177,12 +177,12 @@ namespace Ags.ProjectorController
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
             _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
             if (_replymod == _projectorSelectResponseRGB)
             {
-                this.Message.Invoke(this, "The device is allready on RGB");
+                this.Message.Invoke(this, "The device is already on RGB");
                 _serialPort.Close();
             }
             else if (_replymod == _projectorSelectResponseHDMI | _replymod == _projectorSelectResponseNone)
@@ -195,7 +195,7 @@ namespace Ags.ProjectorController
                 _serialPort.Write(_projectorSelectQuery);
                 // Put the reply into a string
                 _reply = _serialPort.ReadExisting();
-                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                 _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                 // Are we now in a On state and if not lets start to feedback to user for futher investigation
                 if (_replymod == _projectorSelectResponseRGB)
@@ -224,13 +224,13 @@ namespace Ags.ProjectorController
         {
             // Open Serial Port
             _serialPort.Open();
-            // Lets ask the currect power state so we are not asking the projector to do something it dosnt need
+            // Lets ask the correct power state so we are not asking the projector to do something it dosnt need
             _serialPort.Write(_projectorSelectQuery);
             // Lets wait for the device to respond
             Thread.Sleep(6000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+            // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
             _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
             // Are we in an on state
             if (_replymod == _projectorSelectResponseRGB | _replymod == _projectorSelectResponseNone)
@@ -245,9 +245,9 @@ namespace Ags.ProjectorController
                 Thread.Sleep(6000);
                 // Put the respond into a string
                 _reply = _serialPort.ReadExisting();
-                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                 _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
-                // We are allready in HDMI
+                // We are already in HDMI
                 if (_replymod == _projectorSelectResponseHDMI)
                 {
                     this.Message.Invoke(this, "Device has has changed its source to HDMI");
@@ -290,7 +290,7 @@ namespace Ags.ProjectorController
                 Thread.Sleep(2000);
                 // Write the reply into a string
                 _reply = _serialPort.ReadExisting();
-                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                 _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                 // Make sure its not a null result
                 if (_replymod != null)
@@ -308,7 +308,7 @@ namespace Ags.ProjectorController
                         // Place repy into string
                         Thread.Sleep(1000);
                         _reply = _serialPort.ReadExisting();
-                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                         _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                         if (_replymod == _projectorOnReponseSelectFreeze)
                         {
@@ -330,7 +330,7 @@ namespace Ags.ProjectorController
                         Thread.Sleep(1000);
                         // Place reply into string
                         _reply = _serialPort.ReadExisting();
-                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                         _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                         if (_replymod == _projectorOffReponseSelectFreeze)
                         {
@@ -361,13 +361,13 @@ namespace Ags.ProjectorController
                 Thread.Sleep(1000);
                 // Write the reply into a string
                 _reply = _serialPort.ReadExisting();
-                // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                 _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                 // Make sure its not a null result
                 if (_replymod != null)
                 {
                     job = false;
-                    // We are blanked allready
+                    // We are blanked already
                     if (_replymod == _projectorBlankResponseOn & job == false)
                     {
                         // Send the blnk command
@@ -376,10 +376,10 @@ namespace Ags.ProjectorController
                         Thread.Sleep(1000);
                         // Query the projector
                         _serialPort.Write(_projectorBlankQuery);
-                        // Place repy into string
+                        // Place reply into string
                         Thread.Sleep(1000);
                         _reply = _serialPort.ReadExisting();
-                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                         _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                         if (_replymod == _projectorBlankResponseOff)
                         {
@@ -401,7 +401,7 @@ namespace Ags.ProjectorController
                         Thread.Sleep(1000);
                         // Place reply into string
                         _reply = _serialPort.ReadExisting();
-                        // Due to promethean projectors reply with a little more than they are programed to, replace this all the extra stuff with nothing
+                        // Due to promethean projectors reply with a little more than they are programmed to, replace this all the extra stuff with nothing
                         _replymod = _reply.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("P", "");
                         if (_replymod == _projectorBlankResponseOn)
                         {

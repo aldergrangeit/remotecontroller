@@ -301,7 +301,7 @@ namespace Ags.RemoteControl
                     }
                     else
                     {
-                        richTextBox1.AppendText(Environment.NewLine + DateTime.Now.ToString("HH:mm:ss") + " Recived " + _reply);
+                        richTextBox1.AppendText(Environment.NewLine + DateTime.Now.ToString("HH:mm:ss") + " Received " + _reply);
                     }
                     _serialPort.Close();
                 }

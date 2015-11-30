@@ -63,9 +63,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(23, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(366, 13);
+            this.label3.Size = new System.Drawing.Size(363, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "This application uses cheap serial cables to allow users to control projectors,";
+            this.label3.Text = "This application uses cheap serial cables to allow users to control projectors";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
@@ -93,9 +93,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(55, 146);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(300, 13);
+            this.label6.Size = new System.Drawing.Size(309, 13);
             this.label6.TabIndex = 5;
-            this.label6.Text = "This was achived by not having to purchase projector remotes";
+            this.label6.Text = "This was achieved by not having to purchase projector remotes.";
             // 
             // pictureBox1
             // 

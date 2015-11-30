@@ -59,7 +59,7 @@ namespace Ags.ProjectorController
             // Are we in an off state
             if (_reply == _projectorResponsePowerOn)
             {
-                this.Message.Invoke(this, "Device is allready powered on");
+                this.Message.Invoke(this, "Device is already powered on");
                 _serialPort.Close();
             }
             if (_reply == _projectorResponsePowerOff)
@@ -108,7 +108,7 @@ namespace Ags.ProjectorController
             if (_reply == _projectorResponsePowerOff)
             {
                 //TODO Allow user feedback to richtext box in form1
-                this.Message.Invoke(this, "The device is allready off");
+                this.Message.Invoke(this, "The device is already off");
                 _serialPort.Close();
             }
             // Are we in an on state
@@ -156,12 +156,12 @@ namespace Ags.ProjectorController
             Thread.Sleep(2000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            // We are allready in VGA
+            // We are already in VGA
             if (_reply != null)
             {
                 if (_reply == _projectorSelectResponseRGB)
                 {
-                    this.Message.Invoke(this, "The projector is allready on RGB as it's input");
+                    this.Message.Invoke(this, "The projector is already on RGB as it's input");
                     _serialPort.Close();
                 }
                 // Are we are are in HDMI
@@ -205,13 +205,13 @@ namespace Ags.ProjectorController
             Thread.Sleep(2000);
             // Put the reply into a string
             _reply = _serialPort.ReadExisting();
-            //Have we recived a reply form the projector
+            //Have we received a reply form the projector
             if (_reply != null)
             {
-                // We are allready in HDMI
+                // We are already in HDMI
                 if (_reply == _projectorSelectResponseHDMI)
                 {
-                    this.Message.Invoke(this, "The projector is allready on HDMI as the input");
+                    this.Message.Invoke(this, "The projector is already on HDMI as the input");
                     _serialPort.Close();
                 }
                 // Are we are are in HDMI
@@ -264,7 +264,7 @@ namespace Ags.ProjectorController
             if (_reply != null)
             {
                 job = false;
-                // We are blanked allready
+                // We are blanked already
                 if (_reply == _projectorBlankOnReponse & job == false)
                 {
                     // Send the blnk command
