@@ -30,6 +30,7 @@ namespace Ags.RemoteControl
         private const string _prometheanprojectorLampHoursQuery = "~qL\r";
         private const string eventsource = "AG - Virtual Remote";
         private const string eventsourceoperation = "Operation";
+        private string selecteditem = string.Empty;
         private string _reply = string.Empty;
         private int SecertClicks;
         public static DateTime Now { get; set; }
@@ -78,6 +79,33 @@ namespace Ags.RemoteControl
                 {
                     richTextBox1.AppendText(Environment.NewLine + DateTime.Now.ToString("HH:mm:ss") + " " + s);
                 };
+
+            selecteditem = comboBox1.Text.ToString();
+
+            if (selecteditem == "Promethean (PRM-35)")
+            {
+                button7.Enabled = true;
+                button6.Enabled = true;
+                button5.Enabled = true;
+                button4.Enabled = true;
+                button3.Enabled = true;
+                button2.Enabled = true;
+                button1.Enabled = true;
+            }
+            else if (selecteditem == "Casio (All)")
+            {
+                button7.Enabled = true;
+                button6.Enabled = true;
+                button5.Enabled = false;
+                button4.Enabled = true;
+                button3.Enabled = true;
+                button2.Enabled = true;
+                button1.Enabled = true;
+            }
+            else
+            {
+                richTextBox1.AppendText(Environment.NewLine + DateTime.Now.ToString("HH:mm:ss") + " Please select a the projector");
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -96,14 +124,55 @@ namespace Ags.RemoteControl
             WindowState = FormWindowState.Normal;
         }
 
+        private void buttonsdisable()
+        {
+
+           button7.Enabled = false;
+           button6.Enabled = false;
+           button5.Enabled = false;
+           button4.Enabled = false;
+           button3.Enabled = false;
+           button2.Enabled = false;
+           button1.Enabled = false;
+        }
+
+        private void buttonsenable()
+        {
+            if (selecteditem == "Promethean (PRM-35)")
+            {
+                button7.Enabled = true;
+                button6.Enabled = true;
+                button5.Enabled = true;
+                button4.Enabled = true;
+                button3.Enabled = true;
+                button2.Enabled = true;
+                button1.Enabled = true;
+            }
+            else if (selecteditem == "Casio (All)")
+            {
+                button7.Enabled = true;
+                button6.Enabled = true;
+                button5.Enabled = false;
+                button4.Enabled = true;
+                button3.Enabled = true;
+                button2.Enabled = true;
+                button1.Enabled = true;
+            }
+        }
+
+
         private void button2_Click_1(object sender, EventArgs e)
         {
+            buttonsdisable();
             _controller.PowerOff();
+            buttonsenable();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            buttonsdisable();
             _controller.PowerOn();
+            buttonsenable();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -113,12 +182,16 @@ namespace Ags.RemoteControl
 
         private void button3_Click(object sender, EventArgs e)
         {
+            buttonsdisable();
             _controller.ProjectorSelectRGB();
+            buttonsenable();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            buttonsdisable();
             _controller.ProjectorFreeze();
+            buttonsenable();
         }
 
         private void label12_Click(object sender, EventArgs e)
@@ -138,7 +211,9 @@ namespace Ags.RemoteControl
 
         private void button4_Click(object sender, EventArgs e)
         {
+            buttonsdisable();
             _controller.ProjectorSelectHDMI();
+            buttonsenable();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -155,8 +230,13 @@ namespace Ags.RemoteControl
         {
             comboBox1.Enabled = true;
             comboBox2.Enabled = true;
-            button5.Enabled = true;
             button6.Enabled = true;
+            button5.Enabled = true;
+            button4.Enabled = true;
+            button3.Enabled = true;
+            button2.Enabled = true;
+            button1.Enabled = true;
+
             richTextBox1.AppendText(Environment.NewLine + DateTime.Now.ToString("HH:mm:ss") + " Current Lamp Hours - " + _reply);
         }
 
@@ -209,8 +289,10 @@ namespace Ags.RemoteControl
                         comboBox1.Enabled = false;
                         comboBox2.SelectedItem = port;
                         comboBox2.Enabled = false;
-                        button5.Enabled = false;
-                        button6.Enabled = false;
+                        button4.Enabled = true;
+                        button3.Enabled = true;
+                        button2.Enabled = true;
+                        button1.Enabled = true;
                         _serialPort.Write(_casioprojectorLampHoursQuery);
                         Thread.Sleep(1000);
                         _reply = _serialPort.ReadExisting();
@@ -226,8 +308,10 @@ namespace Ags.RemoteControl
                         comboBox1.Enabled = false;
                         comboBox2.SelectedItem = port;
                         comboBox2.Enabled = false;
-                        button5.Enabled = false;
-                        button6.Enabled = false;
+                        button4.Enabled = true;
+                        button3.Enabled = true;
+                        button2.Enabled = true;
+                        button1.Enabled = true;
                         _serialPort.Write(_casioprojectorLampHoursQuery);
                         Thread.Sleep(1000);
                         _reply = _serialPort.ReadExisting();
@@ -268,7 +352,11 @@ namespace Ags.RemoteControl
                             comboBox1.Enabled = false;
                             comboBox2.SelectedItem = port;
                             comboBox2.Enabled = false;
-                            button6.Enabled = false;
+                            button5.Enabled = true;
+                            button4.Enabled = true;
+                            button3.Enabled = true;
+                            button2.Enabled = true;
+                            button1.Enabled = true;
                             _serialPort.Write(_prometheanprojectorLampHoursQuery);
                             Thread.Sleep(1000);
                             _reply = _serialPort.ReadExisting();
@@ -284,7 +372,11 @@ namespace Ags.RemoteControl
                             comboBox1.Enabled = false;
                             comboBox2.SelectedItem = port;
                             comboBox2.Enabled = false;
-                            button6.Enabled = false;
+                            button5.Enabled = true;
+                            button4.Enabled = true;
+                            button3.Enabled = true;
+                            button2.Enabled = true;
+                            button1.Enabled = true;
                             _serialPort.Write(_prometheanprojectorLampHoursQuery);
                             Thread.Sleep(1000);
                             _reply = _serialPort.ReadExisting();
@@ -355,6 +447,28 @@ namespace Ags.RemoteControl
         private void label9_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (CloseCancel() == false)
+            {
+                e.Cancel = true;
+            };
+        }
+
+        public static bool CloseCancel()
+        {
+            const string message = "Are you sure that you would like to close the virtual remote?";
+            const string caption = "Close remote";
+            var result = MessageBox.Show(message, caption,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+                return true;
+            else
+                return false;
         }
     }
 }

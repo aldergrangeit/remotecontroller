@@ -64,6 +64,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(85, 46);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 36);
@@ -124,6 +125,7 @@
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(182, 46);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(81, 36);
@@ -156,6 +158,7 @@
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(85, 101);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(81, 36);
@@ -177,6 +180,7 @@
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(182, 101);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(81, 36);
@@ -274,6 +278,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(182, 156);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(81, 36);
@@ -336,6 +341,7 @@
             // button7
             // 
             this.button7.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(85, 156);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(81, 36);
@@ -388,9 +394,9 @@
             this.Controls.Add(this.button1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowInTaskbar = false;
             this.Text = "Projector Control";
