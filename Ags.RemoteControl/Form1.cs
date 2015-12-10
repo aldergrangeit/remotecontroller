@@ -30,6 +30,7 @@ namespace Ags.RemoteControl
         private const string _prometheanprojectorLampHoursQuery = "~qL\r";
         private const string eventsource = "AG - Virtual Remote";
         private const string eventsourceoperation = "Operation";
+        private const string tooltipstart = "This button will check the current status of the projector and attempt to";
         private string selecteditem = string.Empty;
         private string _reply = string.Empty;
         private int SecertClicks;
@@ -110,7 +111,27 @@ namespace Ags.RemoteControl
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Create the ToolTip and associate with the Form container.
+            ToolTip toolTip1 = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+
+
+            toolTip1.SetToolTip(this.button1, tooltipstart + Environment.NewLine + "power on the projector if the status of the projector is off");
+            toolTip1.SetToolTip(this.button2, tooltipstart + Environment.NewLine + "power off the projector if the status of the projector is on");
+            toolTip1.SetToolTip(this.button3, tooltipstart + Environment.NewLine + "change the input to rgb, this is also sometimes known as vga");
+            toolTip1.SetToolTip(this.button4, tooltipstart + Environment.NewLine + "change the input to HDMI");
+            toolTip1.SetToolTip(this.button7, tooltipstart + Environment.NewLine + "blank the screen, useful when you dont want students to see the answers");
+            toolTip1.SetToolTip(this.button5, tooltipstart + Environment.NewLine + "freeze the screen, useful when you want to put up questions on the screen and carrying on working");
+            this.Cursor = Cursors.WaitCursor;
             scanforprojectors();
+            this.Cursor = Cursors.Default;
+            label10.Text = "V" + Application.ProductVersion;
         }
 
         private void Form1_Closed(object sender, EventArgs e)
@@ -163,16 +184,20 @@ namespace Ags.RemoteControl
 
         private void button2_Click_1(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             buttonsdisable();
             _controller.PowerOff();
             buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             buttonsdisable();
             _controller.PowerOn();
             buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -182,16 +207,20 @@ namespace Ags.RemoteControl
 
         private void button3_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             buttonsdisable();
             _controller.ProjectorSelectRGB();
             buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             buttonsdisable();
             _controller.ProjectorFreeze();
             buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void label12_Click(object sender, EventArgs e)
@@ -211,9 +240,11 @@ namespace Ags.RemoteControl
 
         private void button4_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             buttonsdisable();
             _controller.ProjectorSelectHDMI();
             buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -412,7 +443,11 @@ namespace Ags.RemoteControl
 
         private void button7_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            buttonsdisable();
             _controller.ProjectorBlank();
+            buttonsenable();
+            this.Cursor = Cursors.Default;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -469,6 +504,11 @@ namespace Ags.RemoteControl
                 return true;
             else
                 return false;
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

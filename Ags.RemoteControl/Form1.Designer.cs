@@ -59,6 +59,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -258,11 +259,11 @@
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(79, 461);
+            this.label12.Location = new System.Drawing.Point(101, 471);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(178, 13);
+            this.label12.Size = new System.Drawing.Size(162, 13);
             this.label12.TabIndex = 18;
-            this.label12.Text = "V1 Alder Grange School IT-Services";
+            this.label12.Text = "Alder Grange School IT-Services";
             this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // label14
@@ -360,6 +361,17 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.ForeColor = System.Drawing.Color.Maroon;
+            this.label10.Location = new System.Drawing.Point(314, 500);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(0, 13);
+            this.label10.TabIndex = 29;
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,6 +380,7 @@
             this.BackgroundImage = global::Ags.RemoteControl.Properties.Resources.vrfinal3;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(365, 522);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.comboBox2);
@@ -396,10 +409,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowInTaskbar = false;
-            this.Text = "Projector Control";
+            this.Text = "Virtual Remote";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -443,6 +455,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.Label label10;
     }
 
 }
